@@ -49,4 +49,22 @@ class Location extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function scopeWhereFilters($query, array $filters)
+    {
+        $filters = collect($filters);
+
+        $query->when($filters->get('search'), function ($query, $search) {
+            $query->whereSearch($search);
+        });
+    }
+
+    public function scopeWhereSearch($query, $search)
+    {
+        foreach (explode(' ', $search) as $term) {
+            $query->where(function ($query) use ($term) {
+                $query->where('name', 'like', '%'.$term.'%');
+            });
+        }
+    }
 }

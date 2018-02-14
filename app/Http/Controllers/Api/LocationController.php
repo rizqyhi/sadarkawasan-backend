@@ -14,9 +14,10 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $locations = Location::paginate(5);
+        $locations = Location::whereFilters($request->only('search'))
+            ->paginate(5);
 
         return LocationResource::collection($locations);
     }
