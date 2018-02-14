@@ -35,6 +35,16 @@ class Location extends Model
         return $this->locationTypes[$this->type].' '.$this->name;
     }
 
+    public function setContactsAttribute($value)
+    {
+        $this->attributes['contacts'] = is_array($value) ? json_decode($value, true) : $value;
+    }
+
+    public function setDataSourcesAttribute($value)
+    {
+        $this->attributes['data_sources'] = is_array($value) ? json_decode($value, true) : $value;
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

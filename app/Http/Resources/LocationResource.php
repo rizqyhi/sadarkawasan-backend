@@ -14,11 +14,6 @@ class LocationResource extends JsonResource
      */
     public function toArray($request)
     {
-        $location = parent::toArray($request);
-        
-        $location['contacts'] = json_decode($this->contacts);
-        $location['data_sources'] = json_decode($this->data_sources);
-
-        return $location;
+        return parent::toArray($request);
     }
 }
